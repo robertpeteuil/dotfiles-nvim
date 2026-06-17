@@ -7,25 +7,25 @@ require('lazy').setup({
     opts = {},
   },
 
-  require 'kickstart.plugins.blink-cmp',
-  require 'kickstart.plugins.conform',
-  require 'kickstart.plugins.gitsigns',
-  require 'kickstart.plugins.lspconfig',
-  require 'kickstart.plugins.todo-comments',
+  require 'original.plugins.blink-cmp',
+  require 'original.plugins.conform',
+  require 'original.plugins.gitsigns',
+  require 'original.plugins.lspconfig',
+  require 'original.plugins.todo-comments',
 
   -- Moved to custom/plugins dir for Customization
-  -- require 'kickstart.plugins.indent_line',
-  -- require 'kickstart.plugins.neo-tree',
-  -- require 'kickstart.plugins.which-key',
-  -- require 'kickstart.plugins.telescope',
-  -- require 'kickstart.plugins.mini',
-  -- require 'kickstart.plugins.tokyonight',
-  -- require 'kickstart.plugins.treesitter',
+  -- require 'original.plugins.indent_line',
+  -- require 'original.plugins.neo-tree',
+  -- require 'original.plugins.which-key',
+  -- require 'original.plugins.telescope',
+  -- require 'original.plugins.mini',
+  -- require 'original.plugins.tokyonight',
+  -- require 'original.plugins.treesitter',
 
   -- Stopped using - moved to reference dir
-  -- require 'kickstart.plugins.autopairs',
-  -- require 'kickstart.plugins.debug',
-  -- require 'kickstart.plugins.lint',
+  -- require 'original.plugins.autopairs',
+  -- require 'original.plugins.debug',
+  -- require 'original.plugins.lint',
 
   { import = 'custom.plugins' },
 }, {
