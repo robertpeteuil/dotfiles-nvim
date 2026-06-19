@@ -72,7 +72,8 @@ vim.o.shiftwidth = 2 -- Number of spaces inserted when indenting
 vim.opt.fillchars:append { eob = ' ' }
 
 -- auto-session options
---   removed localoptions, winsize to eliminate issues related to pi terminal pane 20250606
-vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winpos,terminal'
+--   20260606 - removed localoptions, winsize to eliminate issues related to pi terminal pane
+--   20260619 - re-added localoptions, removed blank, tabpages, and winpos
+vim.o.sessionoptions = 'buffers,curdir,folds,help,localoptions,terminal'
 
 -- vim: ts=2 sts=2 sw=2 et
