@@ -58,6 +58,10 @@ vim.o.scrolloff = 10
 -- Confirmation dialog
 vim.o.confirm = true
 
+-- Enable trusted project-local config files like `.nvim.lua`
+--   new/edited files must be opened and trusted with `:trust`
+vim.o.exrc = true
+
 -- set indent = 2 spaces
 vim.o.tabstop = 2 -- A TAB character looks like 2 spaces
 vim.o.expandtab = true -- Pressing the TAB key will insert spaces instead of a TAB character
