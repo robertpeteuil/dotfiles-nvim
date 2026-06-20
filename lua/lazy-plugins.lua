@@ -2,7 +2,6 @@
 
 require('lazy').setup({
 
-  'ThePrimeagen/vim-be-good',
   'sindrets/diffview.nvim',
   'xiyaowong/transparent.nvim',
   {

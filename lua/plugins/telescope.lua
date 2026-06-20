@@ -1,10 +1,4 @@
--- NOTE: Plugins can specify dependencies.
---
--- The dependencies are proper plugin specifications as well - anything
--- you do for a plugin at the top level, you can do for a dependency.
---
--- Use the `dependencies` key to specify the dependencies of a particular plugin
-
+-- telescope.nvim
 return {
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
@@ -24,7 +18,6 @@ return {
         'nvim-telescope/telescope-fzf-native.nvim',
 
         -- `build` is used to run some command when the plugin is installed/updated.
-        -- This is only run then, not every time Neovim starts up.
         build = 'make',
 
         -- `cond` is a condition used to determine whether this plugin should be
@@ -42,24 +35,6 @@ return {
       -- Telescope is a fuzzy finder that comes with a lot of different things that
       -- it can fuzzy find! It's more than just a "file finder", it can search
       -- many different aspects of Neovim, your workspace, LSP, and more!
-      --
-      -- The easiest way to use Telescope, is to start by doing something like:
-      --  :Telescope help_tags
-      --
-      -- After running this command, a window will open up and you're able to
-      -- type in the prompt window. You'll see a list of `help_tags` options and
-      -- a corresponding preview of the help.
-      --
-      -- Two important keymaps to use while in Telescope are:
-      --  - Insert mode: <c-/>
-      --  - Normal mode: ?
-      --
-      -- This opens a window that shows you all of the keymaps for the current
-      -- Telescope picker. This is really useful to discover what Telescope can
-      -- do as well as how to actually do it!
-
-      -- [[ Configure Telescope ]]
-      -- See `:help telescope` and `:help telescope.setup()`
       local extensions = require('telescope').extensions
 
       require('telescope').setup {
@@ -127,10 +102,6 @@ return {
       vim.keymap.set('n', '<leader>gw', extensions.git_worktree.git_worktrees, { desc = 'switch [w]orktree' })
       vim.keymap.set('n', '<leader>gW', extensions.git_worktree.create_git_worktree, { desc = 'create [W]orktrees' })
 
-      -- procession seach integration
-      -- pcall(require('telescope').load_extension, 'prosession')
-      -- vim.keymap.set('n', '<Leader>sp', '<cmd>Telescope prosession<CR>', { desc = 'search [P]rosessions' })
-
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = 'search [h]elp' })
@@ -142,7 +113,7 @@ return {
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = 'search [d]iagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = 'search [r]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = 'search recent files ("." for repeat)' })
-      vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] find open buffers' })
+      vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] find buffers' })
 
       -- Custom find files that includes hidden, but excludes .git
       --   source 1: https://old.reddit.com/r/neovim/comments/nspg8o/telescope_find_files_not_showing_hidden_files/
