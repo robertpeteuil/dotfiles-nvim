@@ -12,6 +12,8 @@ require('lazy').setup({
   { import = 'plugins' },
 }, {
   ui = {
+    -- enable Lazy float border, border colors set in theme file tokyonight.lua
+    border = 'rounded',
     icons = vim.g.have_nerd_font and {} or {
       cmd = '⌘',
       config = '🛠',
