@@ -95,7 +95,7 @@ return {
 
       -- Enable git-file-history extension and keymaps
       pcall(require('telescope').load_extension, 'git_file_history')
-      vim.keymap.set('n', '<leader>gf', extensions.git_file_history.git_file_history, { desc = 'show [f]ile history' })
+      vim.keymap.set('n', '<leader>gh', extensions.git_file_history.git_file_history, { desc = 'show file [h]istory' })
 
       -- Enable git-worktree extension and keymaps
       pcall(require('telescope').load_extension, 'git_worktree')
