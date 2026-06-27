@@ -76,4 +76,7 @@ vim.opt.fillchars:append { eob = ' ' }
 --   20260619 - re-added localoptions, removed blank, tabpages, and winpos
 vim.o.sessionoptions = 'buffers,curdir,folds,help,localoptions,terminal'
 
+-- set conceal level for obsidian plugin
+vim.opt.conceallevel = 2
+
 -- vim: ts=2 sts=2 sw=2 et
