@@ -84,7 +84,7 @@ vim.keymap.set('n', '<leader>yf', function()
   local ref = vim.fn.expand '%:.' .. ':' .. vim.fn.line '.' .. ':' .. vim.fn.col '.'
   vim.fn.setreg('+', ref)
   vim.notify('Copied: ' .. ref)
-end, { desc = 'Copy file reference' })
+end, { desc = 'yank [f]ile name:pos' })
 
 -- Paste from yank-specific buffer
 vim.keymap.set({ 'n', 'x' }, '<leader>p', [["0p]], { desc = '[p]aste yank register' })

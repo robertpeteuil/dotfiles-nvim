@@ -34,7 +34,7 @@ vim.o.signcolumn = 'yes'
 vim.o.updatetime = 250
 
 -- Decrease mapped sequence wait time
-vim.o.timeoutlen = 300
+vim.o.timeoutlen = 700
 
 -- Configure how new splits should be opened
 vim.o.splitright = true
@@ -58,6 +58,10 @@ vim.o.scrolloff = 10
 -- Confirmation dialog
 vim.o.confirm = true
 
+-- Enable trusted project-local config files like `.nvim.lua`
+--   new/edited files must be opened and trusted with `:trust`
+vim.o.exrc = true
+
 -- set indent = 2 spaces
 vim.o.tabstop = 2 -- A TAB character looks like 2 spaces
 vim.o.expandtab = true -- Pressing the TAB key will insert spaces instead of a TAB character
@@ -68,7 +72,11 @@ vim.o.shiftwidth = 2 -- Number of spaces inserted when indenting
 vim.opt.fillchars:append { eob = ' ' }
 
 -- auto-session options
---   removed localoptions, winsize to eliminate issues related to pi terminal pane 20250606
-vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winpos,terminal'
+--   20260606 - removed localoptions, winsize to eliminate issues related to pi terminal pane
+--   20260619 - re-added localoptions, removed blank, tabpages, and winpos
+vim.o.sessionoptions = 'buffers,curdir,folds,help,localoptions,terminal'
+
+-- set conceal level for obsidian plugin
+vim.opt.conceallevel = 2
 
 -- vim: ts=2 sts=2 sw=2 et

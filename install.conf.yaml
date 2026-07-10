@@ -1,0 +1,15 @@
+# Dotbot Config File for dotbot versions > 1.24.0
+
+# dotfiles-nvim
+
+- defaults:
+    link:
+      create: true
+      relink: true
+      force: false
+
+- link:
+    ~/.config/nvim:
+      path: ./
+      force: false
+      backup: false
