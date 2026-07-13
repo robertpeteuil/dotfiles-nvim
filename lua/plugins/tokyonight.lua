@@ -44,9 +44,9 @@ return {
           hl.MasonNormal = { fg = '#c0caf5', bg = '#222228' }
           hl.MasonBorder = { fg = '#27a1b9', bg = '#222228' } -- custom: applied via autocmd
 
-          -- Window separator to medium grey
-          hl.WinSeparator = { fg = c.dark3, bg = 'NONE' }
-          hl.VertSplit = { fg = c.dark3, bg = 'NONE' } -- compatibility with old configs/plugins
+          -- Window separator to medium grey, v1 was c.dark3
+          hl.WinSeparator = { fg = '#565f89', bg = 'NONE' }
+          hl.VertSplit = { fg = '#565f89', bg = 'NONE' } -- compatibility with old configs/plugins
         end,
       }
 
