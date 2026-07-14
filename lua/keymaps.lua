@@ -71,7 +71,15 @@ vim.keymap.set('n', '<leader>bd', ':<C-U>bprevious <bar> bdelete #<CR>==', { des
 
 -- ######## Editing ----------------------------------------
 
--- Yank date into register d -- disabled 20260517
+-- Move line(s) up/down
+vim.keymap.set('n', '<M-j>', '<cmd>m .+1<CR>==', { silent = true })
+vim.keymap.set('n', '<M-k>', '<cmd>m .-2<CR>==', { silent = true })
+vim.keymap.set('x', '<M-j>', ":move '>+1<CR>gv=gv", { silent = true })
+vim.keymap.set('x', '<M-k>', ":move '<-2<CR>gv=gv", { silent = true })
+
+-- ######## Yank -------------------------------------------
+
+-- Yank date into register d
 vim.keymap.set('n', '<leader>yd', function()
   vim.fn.setreg('d', os.date '%Y-%m-%d', 'c')
 end, { desc = 'yank [d]ate to register d' })
@@ -86,15 +94,14 @@ vim.keymap.set('n', '<leader>yf', function()
   vim.notify('Copied: ' .. ref)
 end, { desc = 'yank [f]ile name:pos' })
 
--- Paste from system clipboard or yank-specific register
-vim.keymap.set({ 'n', 'x' }, '<leader>p', [["+p]], { desc = '[p]aste system clipboard' })
-vim.keymap.set({ 'n', 'x' }, '<leader>P', [["0p]], { desc = '[P]aste yank register' })
+-- ######## Paste ------------------------------------------
 
--- Move line(s) up/down
-vim.keymap.set('n', '<M-j>', '<cmd>m .+1<CR>==', { silent = true })
-vim.keymap.set('n', '<M-k>', '<cmd>m .-2<CR>==', { silent = true })
-vim.keymap.set('x', '<M-j>', ":move '>+1<CR>gv=gv", { silent = true })
-vim.keymap.set('x', '<M-k>', ":move '<-2<CR>gv=gv", { silent = true })
+-- Paste from system clipboard or yank-specific register
+vim.keymap.set({ 'n', 'x' }, '<leader>pp', [["+p]], { desc = '[p]aste system clipboard' })
+vim.keymap.set({ 'n', 'x' }, '<leader>py', [["0p]], { desc = 'paste [y]ank register' })
+
+-- Paste clipboard URL as a Markdown link (only available in Markdown buffers)
+--   <leader>pl keymap defined in `after/ftplugin/markdown.lua`
 
 -- ######## Terminal ---------------------------------------
 
