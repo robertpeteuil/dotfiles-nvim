@@ -99,7 +99,7 @@ vim.keymap.set('n', '<M-k>', '<cmd>m .-2<CR>==', { silent = true })
 -- ######## Terminal ---------------------------------------
 
 -- Exit terminal mode in builtin terminal
-vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+-- vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 vim.keymap.set('t', '<C-n>', [[<C-\><C-n>]], { noremap = true, silent = true, desc = 'Exit terminal mode' })
 
 -- Toggle terminal width
