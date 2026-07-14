@@ -90,12 +90,11 @@ end, { desc = 'yank [f]ile name:pos' })
 vim.keymap.set({ 'n', 'x' }, '<leader>p', [["+p]], { desc = '[p]aste system clipboard' })
 vim.keymap.set({ 'n', 'x' }, '<leader>P', [["0p]], { desc = '[P]aste yank register' })
 
--- Move lines up/down
---    note: meta-key requires terminal config
---      iTerm - profile key-bindings: left option key sends Esc+
---      ghostty - `macos-option-as-alt = true` in config
+-- Move line(s) up/down
 vim.keymap.set('n', '<M-j>', '<cmd>m .+1<CR>==', { silent = true })
 vim.keymap.set('n', '<M-k>', '<cmd>m .-2<CR>==', { silent = true })
+vim.keymap.set('x', '<M-j>', ":move '>+1<CR>gv=gv", { silent = true })
+vim.keymap.set('x', '<M-k>', ":move '<-2<CR>gv=gv", { silent = true })
 
 -- ######## Terminal ---------------------------------------
 
