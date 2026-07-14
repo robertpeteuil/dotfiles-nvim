@@ -86,8 +86,9 @@ vim.keymap.set('n', '<leader>yf', function()
   vim.notify('Copied: ' .. ref)
 end, { desc = 'yank [f]ile name:pos' })
 
--- Paste from yank-specific buffer
-vim.keymap.set({ 'n', 'x' }, '<leader>p', [["0p]], { desc = '[p]aste yank register' })
+-- Paste from system clipboard or yank-specific register
+vim.keymap.set({ 'n', 'x' }, '<leader>p', [["+p]], { desc = '[p]aste system clipboard' })
+vim.keymap.set({ 'n', 'x' }, '<leader>P', [["0p]], { desc = '[P]aste yank register' })
 
 -- Move lines up/down
 --    note: meta-key requires terminal config

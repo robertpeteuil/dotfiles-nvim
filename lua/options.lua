@@ -11,11 +11,9 @@ vim.o.mouse = 'a'
 -- hide mode - in status line
 vim.o.showmode = false
 
--- Sync clipboard between OS and Neovim.
---  Schedule fter `UiEnter`
-vim.schedule(function()
-  vim.o.clipboard = 'unnamedplus'
-end)
+-- Keep Neovim registers separate from the system clipboard.
+-- Yanks are mirrored to the system clipboard in autocommands.lua.
+vim.o.clipboard = ''
 
 -- Enable break indent
 vim.o.breakindent = true

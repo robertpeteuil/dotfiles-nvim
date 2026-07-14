@@ -4,10 +4,15 @@
 -- Highlight text when yanking
 --   See `:help vim.hl.on_yank()`
 vim.api.nvim_create_autocmd('TextYankPost', {
-  desc = 'Highlight when yanking (copying) text',
+  desc = 'Highlight yank and copy to the system clipboard',
   group = vim.api.nvim_create_augroup('personal-highlight-yank', { clear = true }),
   callback = function()
     vim.hl.on_yank()
+
+    local event = vim.v.event
+    if event.operator == 'y' and event.regname ~= '_' then
+      vim.fn.setreg('+', event.regcontents, event.regtype)
+    end
   end,
 })
 
