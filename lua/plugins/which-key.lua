@@ -1,20 +1,18 @@
 -- which-key.nvim
 return {
-  { -- Useful plugin to show you pending keybinds.
+  {
     'folke/which-key.nvim',
-    event = 'VimEnter', -- Sets the loading event to 'VimEnter'
+    event = 'VimEnter',
     opts = {
-      -- delay between pressing a key and opening which-key (milliseconds)
-      -- this setting is independent of vim.o.timeoutlen
+      -- delay between pressing key and opening which-key (ms)
+      -- independent of vim.o.timeoutlen
       delay = 0,
       layout = {
-        width = { min = 20, max = 30 }, -- min and max width of the columns
+        width = { min = 20, max = 30 },
       },
       icons = {
-        -- set icon mappings to true if you have a Nerd Font
         mappings = vim.g.have_nerd_font,
-        -- If you are using a Nerd Font: set icons.keys to an empty table which will use the
-        -- default which-key.nvim defined Nerd Font icons, otherwise define a string table
+        -- use which-key.nvim defined Nerd Font icons or define a string table
         keys = vim.g.have_nerd_font and {} or {
           Up = '<Up> ',
           Down = '<Down> ',
@@ -46,7 +44,6 @@ return {
           F12 = '<F12>',
         },
       },
-
       -- Document existing key chains
       spec = {
         { '<leader>S', group = '[S]ession' },
@@ -59,15 +56,56 @@ return {
         { '<leader>a', group = 'AI', icon = '', mode = { 'n', 'x' } },
         { '<leader>an', group = 'Next Edit Suggestions', icon = '⭾' },
         { 'gr', group = 'LSP Actions', mode = { 'n' } },
+        { '<leader>?', ':WhichKey<cr>', desc = 'keymaps (whichkey)' },
       },
     },
-    keys = {
-      {
-        '<leader>?',
-        ':WhichKey<cr>',
-        desc = 'keymaps (whichkey)',
-      },
-    },
+    -- custom wrapper to adjust column widths for 'marks' and 'registers'
+    config = function(_, opts)
+      require('which-key').setup(opts)
+
+      local wk_config = require 'which-key.config'
+      local view = require 'which-key.view'
+      local plugins = require 'which-key.plugins'
+      local original_show = view.show
+      local original_cols = plugins.cols
+      local default_max = wk_config.layout.width.max
+
+      local wide_plugins = {
+        marks = true,
+        registers = true,
+      }
+      local custom_ratio_plugins = {
+        registers = true,
+      }
+
+      -- Widen columns for selected plugins
+      ---@diagnostic disable-next-line: duplicate-set-field
+      view.show = function(...)
+        local state = require('which-key.state').state
+        local plugin = state and state.node and state.node.plugin
+
+        wk_config.layout.width.max = wide_plugins[plugin] and 50 or default_max
+
+        return original_show(...)
+      end
+
+      -- Adjust column content/description ratios for selected plugins
+      ---@diagnostic disable-next-line: duplicate-set-field
+      plugins.cols = function(name)
+        local cols = original_cols(name)
+
+        if custom_ratio_plugins[name] then
+          for _, col in ipairs(cols) do
+            if col.key == 'value' then
+              col.width = 0.65
+              break
+            end
+          end
+        end
+
+        return cols
+      end
+    end,
   },
 }
 -- vim: ts=2 sts=2 sw=2 et
