@@ -72,3 +72,26 @@ vim.keymap.set({ 'n', 'x' }, '<leader>pl', paste_markdown_link, {
   buffer = true,
   desc = 'paste URL as Markdown [l]ink',
 })
+
+local function complete_markdown_task()
+  local line = vim.api.nvim_get_current_line()
+
+  -- Match incomplete Obsidian task states: [ ], [~], [!], and [>].
+  -- Supports top-level and indented tasks.
+  local completed, replacements = line:gsub('^(%s*)%- %[[ ~!>]%] ', '%1- [x] ', 1)
+
+  if replacements == 0 then
+    vim.notify('Line not incomplete task', vim.log.levels.WARN)
+    return
+  end
+
+  completed = completed:gsub('%s+$', '')
+  completed = completed .. '  ✅ ' .. os.date '%Y%m%d'
+
+  vim.api.nvim_set_current_line(completed)
+end
+
+vim.keymap.set('n', '<leader>tc', complete_markdown_task, {
+  buffer = true,
+  desc = 'toggle task [c]omplete',
+})
