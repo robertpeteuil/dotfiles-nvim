@@ -36,6 +36,14 @@ return {
           }
         end
       end,
+      formatters = {
+        stylua = {
+          prepend_args = {
+            '--collapse-simple-statement',
+            'FunctionOnly',
+          },
+        },
+      },
       formatters_by_ft = {
         lua = { 'stylua' },
         javascript = { 'prettier' },
