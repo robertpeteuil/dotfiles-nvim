@@ -72,10 +72,10 @@ vim.keymap.set('n', '<leader>bd', ':<C-U>bprevious <bar> bdelete #<CR>==', { des
 -- ######## Editing ----------------------------------------
 
 -- Move line(s) up/down
-vim.keymap.set('n', '<M-j>', '<cmd>m .+1<CR>==', { silent = true })
-vim.keymap.set('n', '<M-k>', '<cmd>m .-2<CR>==', { silent = true })
-vim.keymap.set('x', '<M-j>', ":move '>+1<CR>gv=gv", { silent = true })
-vim.keymap.set('x', '<M-k>', ":move '<-2<CR>gv=gv", { silent = true })
+vim.keymap.set('n', '<M-J>', '<cmd>m .+1<CR>==', { silent = true })
+vim.keymap.set('n', '<M-K>', '<cmd>m .-2<CR>==', { silent = true })
+vim.keymap.set('x', '<M-J>', ":move '>+1<CR>gv=gv", { silent = true })
+vim.keymap.set('x', '<M-K>', ":move '<-2<CR>gv=gv", { silent = true })
 
 -- ######## Yank -------------------------------------------
 
