@@ -51,6 +51,7 @@ return {
       { '<leader>g', group = '[g]it', mode = { 'n', 'v' } },
       { '<leader>b', group = '[b]uffer' },
       { '<leader>y', group = '[y]ank' },
+      { '<leader>p', group = '[p]aste' },
       { '<leader>x', group = 'Trouble' },
       { '<leader>a', group = 'AI', icon = '', mode = { 'n', 'x' } },
       { '<leader>an', group = 'Next Edit Suggestions', icon = '⭾' },
@@ -69,31 +70,29 @@ return {
     local original_cols = plugins.cols
     local default_max = wk_config.layout.width.max
 
-    local wide_plugins = {
-      marks = true,
-      registers = true,
-    }
-    local custom_ratio_plugins = {
-      registers = true,
-    }
-
-    -- Widen columns for selected plugins
+    -- Adjust maximum column width by plugin
     ---@diagnostic disable-next-line: duplicate-set-field
     view.show = function(...)
       local state = require('which-key.state').state
       local plugin = state and state.node and state.node.plugin
 
-      wk_config.layout.width.max = wide_plugins[plugin] and 50 or default_max
+      if plugin == 'marks' then
+        wk_config.layout.width.max = nil
+      elseif plugin == 'registers' then
+        wk_config.layout.width.max = 50
+      else
+        wk_config.layout.width.max = default_max
+      end
 
       return original_show(...)
     end
 
     -- Adjust column content/description ratios for selected plugins
     ---@diagnostic disable-next-line: duplicate-set-field
-    plugins.cols = function(name)
-      local cols = original_cols(name)
+    plugins.cols = function(plugin)
+      local cols = original_cols(plugin)
 
-      if custom_ratio_plugins[name] then
+      if plugin == 'registers' then
         for _, col in ipairs(cols) do
           if col.key == 'value' then
             col.width = 0.65
