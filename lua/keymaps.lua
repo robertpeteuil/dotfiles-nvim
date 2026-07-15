@@ -85,10 +85,10 @@ vim.keymap.set('n', '<leader>yd', function()
 end, { desc = 'yank [d]ate to register d' })
 
 -- Yank full path of current buffer to clipboard
-vim.keymap.set('n', '<leader>yp', '<cmd>let @+ = expand("%:p")<CR>==', { desc = 'yank [p]ath', silent = true })
+vim.keymap.set({ 'n', 'x' }, '<leader>yp', '<cmd>let @+ = expand("%:p")<CR>==', { desc = 'yank [p]ath', silent = true })
 
 -- Yank file reference (relative path + line + column) to clipboard
-vim.keymap.set('n', '<leader>yf', function()
+vim.keymap.set({ 'n', 'x' }, '<leader>yf', function()
   local ref = vim.fn.expand '%:.' .. ':' .. vim.fn.line '.' .. ':' .. vim.fn.col '.'
   vim.fn.setreg('+', ref)
   vim.notify('Copied: ' .. ref)
