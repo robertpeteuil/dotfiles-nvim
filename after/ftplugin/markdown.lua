@@ -86,7 +86,7 @@ local function complete_markdown_task()
   end
 
   completed = completed:gsub('%s+$', '')
-  completed = completed .. '  ✅ ' .. os.date '%Y%m%d'
+  completed = completed .. ' ✅ ' .. os.date '%Y-%m-%d'
 
   vim.api.nvim_set_current_line(completed)
 end
