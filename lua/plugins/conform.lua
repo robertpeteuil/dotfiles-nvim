@@ -6,11 +6,18 @@ return {
     keys = {
       {
         '<leader>f',
+        function() require('conform').format { async = true, lsp_format = 'fallback' } end,
+        mode = 'n',
+        desc = '[f]ormat buffer',
+      },
+      {
+        '<leader>f',
         function()
           require('conform').format { async = true, lsp_format = 'fallback' }
+          vim.api.nvim_feedkeys(vim.keycode '<Esc>', 'n', false)
         end,
-        mode = '',
-        desc = '[f]ormat buffer',
+        mode = 'x',
+        desc = '[f]ormat selection',
       },
     },
     opts = {
@@ -38,6 +45,7 @@ return {
       end,
       formatters = {
         stylua = {
+          range_args = false,
           prepend_args = {
             '--collapse-simple-statement',
             'FunctionOnly',
