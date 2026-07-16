@@ -62,6 +62,11 @@ end, { desc = 'toggle boolean [v]alue', silent = true })
 
 -- ######## Buffer Related ---------------------------------
 
+-- write without autocommands
+vim.keymap.set("n", "<leader>bw", "<cmd>noautocmd write<CR>", {
+  desc = "buffer [w]rite no autocmd",
+})
+
 -- Close current buffer and switch to last buffer
 --    note: <cmd> specification breaks functionality
 vim.keymap.set('n', '<leader>bd', ':<C-U>bprevious <bar> bdelete #<CR>==', { desc = 'buffer [d]elete', silent = true })
@@ -70,6 +75,10 @@ vim.keymap.set('n', '<leader>bd', ':<C-U>bprevious <bar> bdelete #<CR>==', { des
 --   <leader>bj keymap mapped in `nvim/lua/autocommands.lua:57:1`
 
 -- ######## Editing ----------------------------------------
+
+-- indent / unindent without leaving visual mode
+vim.keymap.set('x', '>', '>gv')
+vim.keymap.set('x', '<', '<gv')
 
 -- Move line(s) up/down
 vim.keymap.set('n', '<M-J>', '<cmd>m .+1<CR>==', { silent = true })
