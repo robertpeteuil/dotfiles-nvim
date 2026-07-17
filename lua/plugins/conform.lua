@@ -43,17 +43,9 @@ return {
         }
       end
     end,
-    formatters = {
-      stylua = {
-        range_args = false,
-        prepend_args = {
-          '--collapse-simple-statement',
-          'FunctionOnly',
-        },
-      },
-    },
     formatters_by_ft = {
-      lua = { 'stylua' },
+      -- Lua uses the EmmyLuaCodeStyle formatter built into lua-language-server
+      -- through the LSP fallback. StyLua remains available explicitly.
       javascript = { 'prettier' },
 
       json = { 'prettier' },
