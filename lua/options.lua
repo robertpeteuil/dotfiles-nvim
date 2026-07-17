@@ -51,7 +51,7 @@ vim.o.inccommand = 'split'
 vim.o.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.o.scrolloff = 10
+vim.o.scrolloff = 12
 
 -- Confirmation dialog
 vim.o.confirm = true
@@ -74,7 +74,7 @@ vim.opt.fillchars:append { eob = ' ' }
 --   20260619 - re-added localoptions, removed blank, tabpages, and winpos
 vim.o.sessionoptions = 'buffers,curdir,folds,help,localoptions,terminal'
 
--- set conceal level for obsidian plugin
-vim.opt.conceallevel = 2
+-- Set the default conceal level; filetype overrides are in autocommands.lua
+vim.opt.conceallevel = 0
 
 -- vim: ts=2 sts=2 sw=2 et
