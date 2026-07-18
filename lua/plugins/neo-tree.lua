@@ -28,12 +28,47 @@ return {
       return result
     end
 
+    local function copy_node_path(state, relative)
+      local node = state.tree:get_node()
+      if not node or not node.path then
+        vim.notify('No file path under cursor', vim.log.levels.WARN)
+        return
+      end
+
+      local full_path = vim.fs.normalize(vim.fn.fnamemodify(node.path, ':p'))
+      local path = full_path
+
+      if relative then
+        local root = state.path or vim.fn.getcwd()
+        path = vim.fs.relpath(root, full_path) or vim.fn.fnamemodify(full_path, ':.')
+      end
+
+      vim.fn.setreg('+', path)
+      vim.notify('Copied: ' .. path)
+    end
+
     -- set personal default options here
     --   project overrides enabled in plugin config below
     local default_opts = {
       auto_clean_after_session_restore = true, -- Automatically clean up broken neo-tree buffers saved in sessions
       close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
       enable_cursor_hijack = true, -- If enabled neotree will keep the cursor on the first letter of the filename when moving in the tree.
+      window = {
+        mappings = {
+          ['<C-y>'] = {
+            function(state)
+              copy_node_path(state, true)
+            end,
+            desc = 'Copy relative path',
+          },
+          ['<C-S-y>'] = {
+            function(state)
+              copy_node_path(state, false)
+            end,
+            desc = 'Copy full path',
+          },
+        },
+      },
       filesystem = {
         -- hijack_netrw_behavior = 'open_current',
         follow_current_file = {
