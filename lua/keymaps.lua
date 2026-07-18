@@ -45,15 +45,18 @@ vim.keymap.set('x', '<M-K>', ":move '<-2<CR>gv=gv", { silent = true })
 -- Yank date into register d
 vim.keymap.set('n', '<leader>yd', function() vim.fn.setreg('d', os.date '%Y-%m-%d', 'c') end, { desc = 'yank [d]ate to register d' })
 
--- Yank full path of current buffer to clipboard
-vim.keymap.set({ 'n', 'x' }, '<leader>yp', '<cmd>let @+ = expand("%:p")<CR>==', { desc = 'yank [p]ath', silent = true })
-
 -- Yank file reference (relative path + line + column) to clipboard
-vim.keymap.set({ 'n', 'x' }, '<leader>yf', function()
+vim.keymap.set({ 'n', 'x' }, '<leader>yp', function()
   local ref = vim.fn.expand '%:.' .. ':' .. vim.fn.line '.' .. ':' .. vim.fn.col '.'
   vim.fn.setreg('+', ref)
   vim.notify('Copied: ' .. ref)
-end, { desc = 'yank [f]ile name:pos' })
+end, { desc = 'yank file name:[p]os' })
+
+-- Yank relative path of current buffer to clipboard
+vim.keymap.set({ 'n', 'x' }, '<leader>yf', '<cmd>let @+ = expand("%:.")<CR>', { desc = 'yank relative [f]ile-path', silent = true })
+
+-- Yank full path of current buffer to clipboard
+vim.keymap.set({ 'n', 'x' }, '<leader>yF', '<cmd>let @+ = expand("%:p")<CR>==', { desc = 'yank [F]ull-path', silent = true })
 
 -- ######## Paste ------------------------------------------
 
