@@ -34,7 +34,13 @@ vim.keymap.set('n', '<leader>bd', ':<C-U>bprevious <bar> bdelete #<CR>==', { des
 vim.keymap.set('x', '>', '>gv')
 vim.keymap.set('x', '<', '<gv')
 
--- Move line(s) up/down
+-- meta shift h/j/k/l - text movement keys
+-- text indent / unindent
+vim.keymap.set('n', '<M-H>', '<<', { desc = 'Unindent current line' })
+vim.keymap.set('n', '<M-L>', '>>', { desc = 'Indent current line' })
+vim.keymap.set('x', '<M-H>', '<gv', { desc = 'Unindent selection' })
+vim.keymap.set('x', '<M-L>', '>gv', { desc = 'Indent selection' })
+-- text up / down
 vim.keymap.set('n', '<M-J>', '<cmd>m .+1<CR>==', { silent = true })
 vim.keymap.set('n', '<M-K>', '<cmd>m .-2<CR>==', { silent = true })
 vim.keymap.set('x', '<M-J>', ":move '>+1<CR>gv=gv", { silent = true })
