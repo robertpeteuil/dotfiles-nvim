@@ -63,7 +63,7 @@ local function paste_markdown_link()
   local link = '[' .. label .. '](' .. url .. ')'
   vim.api.nvim_buf_set_text(0, start_row - 1, start_col - 1, end_row - 1, end_col, { link })
 
-  -- Leave Visual mode, then place the cursor at the end of the new link.
+  -- Leave Visual mode, then place the cursor at the end of the new link
   vim.api.nvim_input '<Esc>'
   vim.schedule(function()
     if vim.api.nvim_buf_is_valid(0) then
@@ -73,20 +73,31 @@ local function paste_markdown_link()
 end
 
 -- COMPLETE MARKDOWN TASK
+local task_indicators = {
+  [' '] = '✅',
+  ['x'] = '✅',
+  ['X'] = '✅',
+  ['!'] = '⚪', -- alt: ⚠️
+  ['>'] = '🟠',
+  ['~'] = '⭕', -- alt: 🚫
+}
+
 local function complete_markdown_task()
   local line = vim.api.nvim_get_current_line()
+  local task_status = line:match '^%s*%- %[([ xX~!>])%] '
 
-  -- Match incomplete Obsidian task states: [ ], [~], [!], and [>].
+  -- Match supported Obsidian task states: [ ], [x], [X], [~], [!], and [>]
   -- Supports top-level and indented tasks.
-  local completed, replacements = line:gsub('^(%s*)%- %[[ ~!>]%] ', '%1- [x] ', 1)
-
-  if replacements == 0 then
-    vim.notify('Line not incomplete task', vim.log.levels.WARN)
+  if not task_status then
+    vim.notify('Line not supported task', vim.log.levels.WARN)
     return
   end
 
+  -- Convert only a completely unchecked task to [x].
+  local completed = line:gsub('^(%s*)%- %[ %] ', '%1- [x] ', 1)
+
   completed = completed:gsub('%s+$', '')
-  completed = completed .. ' ✅ ' .. os.date '%Y-%m-%d'
+  completed = completed .. ' ' .. task_indicators[task_status] .. ' ' .. os.date '%Y-%m-%d'
 
   vim.api.nvim_set_current_line(completed)
 end
