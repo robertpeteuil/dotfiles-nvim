@@ -295,6 +295,12 @@ vim.keymap.set({ 'n', 'x' }, '<leader>na', archive_markdown_tasks, {
   desc = '[a]rchive to changelog',
 })
 
+-- keymap: show obsidian TOC
+vim.keymap.set('n', '<leader>nt', '<cmd>Obsidian toc<CR>', { desc = 'obsidian [T]OC', silent = true })
+
+-- keymap: show obsidian links
+vim.keymap.set('n', '<leader>nl', '<cmd>Obsidian links<CR>', { desc = 'obsidian [l]inks', silent = true })
+
 -- which-key notes group
 require('which-key').add {
   {
