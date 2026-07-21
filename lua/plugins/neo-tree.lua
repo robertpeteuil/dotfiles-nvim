@@ -181,6 +181,10 @@ return {
       })
     end
 
+    if vim.g.project_neotree_show_gitignored then
+      opts.filesystem.filtered_items.hide_gitignored = false
+    end
+
     return opts
   end,
 }
