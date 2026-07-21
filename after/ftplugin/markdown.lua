@@ -286,7 +286,7 @@ vim.keymap.set({ 'n', 'x' }, '<leader>pl', paste_markdown_link, {
 -- keymap: task complete
 vim.keymap.set('n', '<leader>nc', complete_markdown_task, {
   buffer = true,
-  desc = 'task [c]omplete',
+  desc = '[c]omplete task',
 })
 
 -- keymap: task archive to changelog
@@ -295,11 +295,11 @@ vim.keymap.set({ 'n', 'x' }, '<leader>na', archive_markdown_tasks, {
   desc = '[a]rchive to changelog',
 })
 
--- keymap: show obsidian TOC
-vim.keymap.set('n', '<leader>nt', '<cmd>Obsidian toc<CR>', { desc = 'obsidian [T]OC', silent = true })
+-- keymap: show document symbols
+vim.keymap.set('n', '<leader>nt', 'gO', { desc = 'show [T]OC', remap = true, silent = true })
 
 -- keymap: show obsidian links
-vim.keymap.set('n', '<leader>nl', '<cmd>Obsidian links<CR>', { desc = 'obsidian [l]inks', silent = true })
+vim.keymap.set('n', '<leader>nl', '<cmd>Obsidian links<CR>', { desc = 'show [l]inks (obsidian)', silent = true })
 
 -- which-key notes group
 require('which-key').add {
