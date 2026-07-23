@@ -31,6 +31,11 @@ vim.keymap.set('n', '<leader>bd', ':<C-U>bprevious <bar> bdelete #<CR>==', { des
 
 -- ######## Editing ----------------------------------------
 
+-- delete char without replacing unnamed register
+vim.keymap.set('n', 'x', function()
+  return vim.v.register == '"' and '"_x' or 'x'
+end, { expr = true, desc = 'Delete char without replacing paste register' })
+
 -- indent / unindent without leaving visual mode
 vim.keymap.set('x', '>', '>gv')
 vim.keymap.set('x', '<', '<gv')
