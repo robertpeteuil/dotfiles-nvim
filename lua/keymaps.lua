@@ -1,22 +1,87 @@
 -- [[ Keymaps ]]
 --
---    additional keymaps defined in plugin definitions in plugins/
---    See `:help vim.keymap.set()`
+--    additional keymaps
+--      plugin defs in plugins/
+--      filetype defs in after/ftplugin/
 
 -- ######## Misc -------------------------------------------
 
 -- remap ZZ to confirm quit
 vim.keymap.set('n', 'ZZ', '<Cmd>confirm qall<CR>', { desc = 'Quit all, prompting to save changes', silent = true })
 
--- Clear highlights on search
+-- clear highlights on search
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
--- Diagnostic current line (float)
+-- diagnostic current line (float)
 vim.keymap.set('n', '<leader>d', '<cmd>lua vim.diagnostic.open_float(0, {scope="line"})<CR>', { desc = '[d]iagnotic (float)', silent = true })
+
+-- ######## Buffer Related ---------------------------------
+
+-- write without autocommands
+vim.keymap.set('n', '<leader>bw', '<cmd>noautocmd write<CR>', {
+  desc = 'buffer [w]rite no autocmd',
+})
+
+-- close current buffer and switch to last buffer
+--    note: <cmd> specification breaks functionality
+vim.keymap.set('n', '<leader>bd', ':<C-U>bprevious <bar> bdelete #<CR>==', { desc = 'buffer [d]elete', silent = true })
+
+-- pretty view JSONL (only available in JSONL buffers
+--   <leader>bj keymap mapped in `nvim/lua/autocommands.lua:57:1`
+
+-- ######## Editing ----------------------------------------
+
+-- delete char without replacing unnamed register
+vim.keymap.set('n', 'x', function()
+  return vim.v.register == '"' and '"_x' or 'x'
+end, { expr = true, desc = 'Delete char without replacing paste register' })
+
+-- indent / unindent without leaving visual mode
+vim.keymap.set('x', '>', '>gv')
+vim.keymap.set('x', '<', '<gv')
+
+-- meta shift h/j/k/l - text movement keys
+-- text indent / unindent
+vim.keymap.set('n', '<M-H>', '<<', { desc = 'Unindent current line' })
+vim.keymap.set('n', '<M-L>', '>>', { desc = 'Indent current line' })
+vim.keymap.set('x', '<M-H>', '<gv', { desc = 'Unindent selection' })
+vim.keymap.set('x', '<M-L>', '>gv', { desc = 'Indent selection' })
+-- text up / down
+vim.keymap.set('n', '<M-J>', '<cmd>m .+1<CR>==', { silent = true })
+vim.keymap.set('n', '<M-K>', '<cmd>m .-2<CR>==', { silent = true })
+vim.keymap.set('x', '<M-J>', ":move '>+1<CR>gv=gv", { silent = true })
+vim.keymap.set('x', '<M-K>', ":move '<-2<CR>gv=gv", { silent = true })
+
+-- ######## Yank -------------------------------------------
+
+-- yank date into register d
+vim.keymap.set('n', '<leader>yd', function() vim.fn.setreg('d', os.date '%Y-%m-%d', 'c') end, { desc = 'yank [d]ate to register d' })
+
+-- yank file reference (relative path + line + column) to clipboard
+vim.keymap.set({ 'n', 'x' }, '<leader>yp', function()
+  local ref = vim.fn.expand '%:.' .. ':' .. vim.fn.line '.' .. ':' .. vim.fn.col '.'
+  vim.fn.setreg('+', ref)
+  vim.notify('Copied: ' .. ref)
+end, { desc = 'yank file name:[p]os' })
+
+-- yank relative path of current buffer to clipboard
+vim.keymap.set({ 'n', 'x' }, '<leader>yf', '<cmd>let @+ = expand("%:.")<CR>', { desc = 'yank relative [f]ile-path', silent = true })
+
+-- yank full path of current buffer to clipboard
+vim.keymap.set({ 'n', 'x' }, '<leader>yF', '<cmd>let @+ = expand("%:p")<CR>==', { desc = 'yank [F]ull-path', silent = true })
+
+-- ######## Paste ------------------------------------------
+
+-- paste from system clipboard or yank-specific register
+vim.keymap.set({ 'n', 'x' }, '<leader>pp', [["+p]], { desc = '[p]aste system clipboard' })
+vim.keymap.set({ 'n', 'x' }, '<leader>py', [["0p]], { desc = 'paste [y]ank register' })
+
+-- paste clipboard URL as a Markdown link (only available in Markdown buffers)
+--   <leader>pl keymap defined in `after/ftplugin/markdown.lua`
 
 -- ######## Search -----------------------------------------
 
--- Search TODOs with Telescope
+-- search TODOs with telescope
 vim.keymap.set('n', '<leader>sT', '<cmd>TodoTelescope<CR>', { desc = 'search [T]ODO comments', silent = true })
 
 -- ######## Toggles ----------------------------------------
@@ -28,7 +93,7 @@ vim.keymap.set('n', '<leader>tt', '<cmd>TransparentToggle<CR>==', { desc = 'togg
 -- toggle markdown rendering
 vim.keymap.set('n', '<leader>tm', '<cmd>RenderMarkdown toggle<cr>', { desc = 'toggle [m]arkdown render', silent = true })
 
--- Toggle boolean value
+-- toggle boolean value
 vim.keymap.set('n', '<leader>tv', function()
   local toggles = {
     ['true'] = 'false',
@@ -60,49 +125,13 @@ vim.keymap.set('n', '<leader>tv', function()
   end
 end, { desc = 'toggle boolean [v]alue', silent = true })
 
--- ######## Buffer Related ---------------------------------
-
--- Close current buffer and switch to last buffer
---    note: <cmd> specification breaks functionality
-vim.keymap.set('n', '<leader>bd', ':<C-U>bprevious <bar> bdelete #<CR>==', { desc = 'buffer [d]elete', silent = true })
-
--- Pretty view JSONL (only available in JSONL buffers
---   <leader>bj keymap mapped in `nvim/lua/autocommands.lua:57:1`
-
--- ######## Editing ----------------------------------------
-
--- Yank date into register d -- disabled 20260517
-vim.keymap.set('n', '<leader>yd', function()
-  vim.fn.setreg('d', os.date '%Y-%m-%d', 'c')
-end, { desc = 'yank [d]ate to register d' })
-
--- Yank full path of current buffer to clipboard
-vim.keymap.set('n', '<leader>yp', '<cmd>let @+ = expand("%:p")<CR>==', { desc = 'yank [p]ath', silent = true })
-
--- Yank file reference (relative path + line + column) to clipboard
-vim.keymap.set('n', '<leader>yf', function()
-  local ref = vim.fn.expand '%:.' .. ':' .. vim.fn.line '.' .. ':' .. vim.fn.col '.'
-  vim.fn.setreg('+', ref)
-  vim.notify('Copied: ' .. ref)
-end, { desc = 'yank [f]ile name:pos' })
-
--- Paste from yank-specific buffer
-vim.keymap.set({ 'n', 'x' }, '<leader>p', [["0p]], { desc = '[p]aste yank register' })
-
--- Move lines up/down
---    note: meta-key requires terminal config
---      iTerm - profile key-bindings: left option key sends Esc+
---      ghostty - `macos-option-as-alt = true` in config
-vim.keymap.set('n', '<M-j>', '<cmd>m .+1<CR>==', { silent = true })
-vim.keymap.set('n', '<M-k>', '<cmd>m .-2<CR>==', { silent = true })
-
 -- ######## Terminal ---------------------------------------
 
--- Exit terminal mode in builtin terminal
-vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+-- exit terminal mode in builtin terminal
+-- vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 vim.keymap.set('t', '<C-n>', [[<C-\><C-n>]], { noremap = true, silent = true, desc = 'Exit terminal mode' })
 
--- Toggle terminal width
+-- toggle terminal width
 local term_wide = false
 local term_original_width = nil
 local EXTRA_COLS = 40
@@ -124,9 +153,7 @@ local function toggle_terminal_width()
 
   if not term_wide then
     term_original_width = vim.api.nvim_win_get_width(term_win)
-    vim.api.nvim_win_call(term_win, function()
-      vim.cmd(EXTRA_COLS .. 'wincmd >')
-    end)
+    vim.api.nvim_win_call(term_win, function() vim.cmd(EXTRA_COLS .. 'wincmd >') end)
     term_wide = true
   else
     if term_original_width then

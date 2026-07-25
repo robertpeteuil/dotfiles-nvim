@@ -11,11 +11,9 @@ vim.o.mouse = 'a'
 -- hide mode - in status line
 vim.o.showmode = false
 
--- Sync clipboard between OS and Neovim.
---  Schedule fter `UiEnter`
-vim.schedule(function()
-  vim.o.clipboard = 'unnamedplus'
-end)
+-- Keep Neovim registers separate from the system clipboard.
+-- Yanks are mirrored to the system clipboard in autocommands.lua.
+vim.o.clipboard = ''
 
 -- Enable break indent
 vim.o.breakindent = true
@@ -53,7 +51,7 @@ vim.o.inccommand = 'split'
 vim.o.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.o.scrolloff = 10
+vim.o.scrolloff = 12
 
 -- Confirmation dialog
 vim.o.confirm = true
@@ -76,7 +74,7 @@ vim.opt.fillchars:append { eob = ' ' }
 --   20260619 - re-added localoptions, removed blank, tabpages, and winpos
 vim.o.sessionoptions = 'buffers,curdir,folds,help,localoptions,terminal'
 
--- set conceal level for obsidian plugin
-vim.opt.conceallevel = 2
+-- Set the default conceal level; filetype overrides are in autocommands.lua
+vim.opt.conceallevel = 0
 
 -- vim: ts=2 sts=2 sw=2 et

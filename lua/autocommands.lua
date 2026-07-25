@@ -1,13 +1,36 @@
 -- [[ Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
+-- Set conceallevel overrides for defined filetype
+local conceallevel_overrides = {
+  markdown = 2,
+  ['markdown.mdx'] = 2,
+  json = 0,
+  jsonc = 0,
+}
+
+local function update_conceallevel()
+  vim.wo.conceallevel = conceallevel_overrides[vim.bo.filetype] or vim.opt_global.conceallevel:get()
+end
+
+vim.api.nvim_create_autocmd({ 'FileType', 'BufEnter', 'WinEnter' }, {
+  desc = 'Set conceal level per filetype',
+  group = vim.api.nvim_create_augroup('personal-conceallevel', { clear = true }),
+  callback = update_conceallevel,
+})
+
 -- Highlight text when yanking
 --   See `:help vim.hl.on_yank()`
 vim.api.nvim_create_autocmd('TextYankPost', {
-  desc = 'Highlight when yanking (copying) text',
+  desc = 'Highlight yank and copy to the system clipboard',
   group = vim.api.nvim_create_augroup('personal-highlight-yank', { clear = true }),
   callback = function()
     vim.hl.on_yank()
+
+    local event = vim.v.event
+    if event.operator == 'y' and event.regname ~= '_' then
+      vim.fn.setreg('+', event.regcontents, event.regtype)
+    end
   end,
 })
 

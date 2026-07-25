@@ -1,3 +1,6 @@
 .pi/docs/
 .pi/extensions/
+.pi/settings.json
 AGENTS.md
+/docs
+/docs/

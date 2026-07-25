@@ -176,6 +176,12 @@ return {
           --     max_attempts = 3,
           --   },
           -- },
+          lsp = {
+            name = 'lsp',
+            module = 'blink.cmp.sources.lsp',
+            enabled = true,
+            score_offset = 96,
+          },
           supermaven = {
             name = 'supermaven',
             module = 'blink-cmp-supermaven',

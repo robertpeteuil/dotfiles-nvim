@@ -24,7 +24,7 @@ return {
       link = {
         style = 'wiki',
         format = 'shortest',
-        auto_update = false,
+        auto_update = true,
       },
       daily_notes = {
         enabled = true,

@@ -93,6 +93,7 @@ Configured language servers include `yamlls`, `tombi`, `jsonls`, `bashls`, `base
 | `nvim-neo-tree/neo-tree.nvim` | `v3.x` | File tree explorer |
 | `nvim-treesitter/nvim-treesitter` | `main` | Syntax parsing |
 | `nvim-treesitter/nvim-treesitter-textobjects` | `main` | Treesitter textobjects |
+| `Wansmer/treesj` | `main` | Structural split/join for Lua syntax nodes |
 | `alexghergh/nvim-tmux-navigation` | `main` | Neovim/tmux pane movement |
 | `nvim-lua/plenary.nvim` | `master` | Lua utility library |
 | `folke/snacks.nvim` | `main` | Enhanced input and picker |
@@ -163,6 +164,8 @@ Configured language servers include `yamlls`, `tombi`, `jsonls`, `bashls`, `base
 ### LSP and Tooling
 
 - Mason ensures configured language servers and formatters are installed.
+- Mason does not automatically enable installed LSPs; a new Mason-installed LSP must also be added to the `servers` table in `lua/plugins/lspconfig.lua`.
+- Lua formatting uses EmmyLuaCodeStyle through `lua-language-server`; Lua buffers provide `<leader>Fs` for explicit StyLua formatting and `<leader>Ft` for TreeSJ split/join.
 - LSP diagnostics use custom signs, rounded floats, severity sorting, and virtual text.
 - LSP attach maps use Neovim's `gr*` conventions for rename, actions, references, definitions, and type definitions.
 - LSP progress is forwarded to terminals that support progress reporting, including tmux-aware escaping.
@@ -196,6 +199,7 @@ The leader key is `<Space>`. Major groups are documented through `which-key`:
 | `<leader>y` | Yank helpers |
 | `<leader>x` | Trouble |
 | `<leader>a` | AI / Sidekick |
+| `<leader>F` | Lua-specific formatting (Lua buffers only) |
 | `gr` | LSP actions |
 
 ## Maintenance Notes

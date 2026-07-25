@@ -216,7 +216,59 @@ return {
           settings = {
             Lua = {
               format = {
-                enable = false,
+                enable = true,
+                -- EmmyLuaCodeStyle defaults used when a workspace does not
+                -- provide higher-priority settings in .editorconfig.
+                defaultConfig = {
+                  indent_style = 'space',
+                  indent_size = '2',
+                  tab_width = '2',
+                  quote_style = 'single',
+                  continuation_indent = '2',
+                  max_line_length = '160',
+                  end_of_line = 'lf',
+                  trailing_table_separator = 'keep',
+                  call_arg_parentheses = 'keep',
+                  space_around_table_field_list = 'true',
+                  space_before_function_open_parenthesis = 'false',
+                  space_before_function_call_open_parenthesis = 'false',
+                  space_before_closure_open_parenthesis = 'false',
+                  space_before_function_call_single_arg = 'always',
+                  space_inside_function_call_parentheses = 'false',
+                  space_inside_function_param_list_parentheses = 'false',
+                  space_inside_square_brackets = 'false',
+                  space_around_table_append_operator = 'true',
+                  space_before_inline_comment = '1',
+                  space_after_comment_dash = 'false',
+                  space_around_math_operator = 'true',
+                  space_after_comma = 'true',
+                  space_after_comma_in_for_statement = 'true',
+                  space_around_concat_operator = 'true',
+                  space_around_assign_operator = 'true',
+                  align_call_args = 'false',
+                  align_function_params = 'false',
+                  align_continuous_assign_statement = 'false',
+                  align_continuous_rect_table_field = 'false',
+                  align_if_branch = 'false',
+                  align_array_table = 'false',
+                  align_continuous_similar_call_args = 'false',
+                  align_continuous_inline_comment = 'false',
+                  align_chain_expr = 'none',
+                  line_space_after_if_statement = 'keep',
+                  line_space_after_do_statement = 'keep',
+                  line_space_after_while_statement = 'keep',
+                  line_space_after_repeat_statement = 'keep',
+                  line_space_after_for_statement = 'keep',
+                  line_space_after_local_or_assign_statement = 'keep',
+                  line_space_after_function_statement = 'keep',
+                  line_space_after_expression_statement = 'keep',
+                  line_space_after_comment = 'keep',
+                  line_space_around_block = 'keep',
+                  break_all_list_when_line_exceed = 'false',
+                  auto_collapse_lines = 'false',
+                  break_before_braces = 'false',
+                  end_statement_with_semicolon = 'keep',
+                },
               },
               completion = {
                 callSnippet = 'Replace',
@@ -247,17 +299,11 @@ return {
 
       require('mason-lspconfig').setup {
         ensure_installed = {}, -- explicitly set to an empty table, installed above
-        automatic_installation = false,
-        handlers = {
-          function(server_name)
-            local server = servers[server_name] or {}
-            -- This handles overriding only values explicitly passed
-            -- by the server configuration above. Useful when disabling
-            -- certain features of an LSP (for example, turning off formatting for ts_ls)
-            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            require('lspconfig')[server_name].setup(server)
-          end,
-        },
+        -- Servers are configured and enabled explicitly below. This also keeps
+        -- formatter-only tools such as StyLua from starting in LSP mode.
+        -- IMPORTANT: A future Mason-installed LSP must be added to `servers`
+        -- above before it will be enabled.
+        automatic_enable = false,
       }
 
       -- New style lsp config / enable  20260525

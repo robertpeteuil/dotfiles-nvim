@@ -1,57 +1,64 @@
+-- conform.nvim and formatters
 return {
-  { -- Autoformat
-    'stevearc/conform.nvim',
-    event = { 'BufWritePre' },
-    cmd = { 'ConformInfo' },
-    keys = {
-      {
-        '<leader>f',
-        function()
-          require('conform').format { async = true, lsp_format = 'fallback' }
-        end,
-        mode = '',
-        desc = '[f]ormat buffer',
-      },
+  'stevearc/conform.nvim',
+  event = { 'BufWritePre' },
+  cmd = { 'ConformInfo' },
+  keys = {
+    {
+      '<leader>f',
+      function() require('conform').format { async = true, lsp_format = 'fallback' } end,
+      mode = 'n',
+      desc = '[f]ormat buffer',
     },
-    opts = {
-      notify_on_error = false,
-      format_on_save = function(bufnr)
-        -- Disable "format_on_save lsp_fallback" for languages that don't
-        -- have a well standardized coding style. You can add additional
-        -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = {
-          c = true,
-          cpp = true,
-          markdown = true,
-          javascript = true,
-          json = true,
-          ['markdown.mdx'] = true,
-        }
-        if disable_filetypes[vim.bo[bufnr].filetype] then
-          return nil
-        else
-          return {
-            timeout_ms = 500,
-            lsp_format = 'fallback',
-          }
-        end
+    {
+      '<leader>f',
+      function()
+        require('conform').format { async = true, lsp_format = 'fallback' }
+        vim.api.nvim_feedkeys(vim.keycode '<Esc>', 'n', false)
       end,
-      formatters_by_ft = {
-        lua = { 'stylua' },
-        javascript = { 'prettier' },
+      mode = 'x',
+      desc = '[f]ormat selection',
+    },
+  },
+  opts = {
+    notify_on_error = false,
+    format_on_save = function(bufnr)
+      -- Disable "format_on_save lsp_fallback" for languages that don't
+      -- have a well standardized coding style. You can add additional
+      -- languages here or re-enable it for the disabled ones.
+      local disable_filetypes = {
+        c = true,
+        cpp = true,
+        markdown = true,
+        javascript = true,
+        json = true,
+        ['markdown.mdx'] = true,
+      }
+      if disable_filetypes[vim.bo[bufnr].filetype] then
+        return nil
+      else
+        return {
+          timeout_ms = 500,
+          lsp_format = 'fallback',
+        }
+      end
+    end,
+    formatters_by_ft = {
+      -- Lua uses the EmmyLuaCodeStyle formatter built into lua-language-server
+      -- through the LSP fallback. StyLua remains available explicitly.
+      javascript = { 'prettier' },
 
-        json = { 'prettier' },
-        yaml = { 'prettier' },
-        yml = { 'prettier' },
+      json = { 'prettier' },
+      yaml = { 'prettier' },
+      yml = { 'prettier' },
 
-        markdown = { 'prettier' },
-        ['markdown.mdx'] = { 'prettier' },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        --
-        -- You can use 'stop_after_first' to run the first available formatter from the list
-        -- javascript = { "prettierd", "prettier", stop_after_first = true },
-      },
+      markdown = { 'prettier' },
+      ['markdown.mdx'] = { 'prettier' },
+      -- Conform can also run multiple formatters sequentially
+      -- python = { "isort", "black" },
+      --
+      -- You can use 'stop_after_first' to run the first available formatter from the list
+      -- javascript = { "prettierd", "prettier", stop_after_first = true },
     },
   },
 }
