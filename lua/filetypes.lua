@@ -2,6 +2,9 @@
 --  See `:help filetype` and `:help new-filetype`
 
 vim.filetype.add {
+  extension = {
+    ini = 'confini',
+  },
   filename = {
     -- docker-compose
     ['docker-compose.yml'] = 'yaml.docker-compose',

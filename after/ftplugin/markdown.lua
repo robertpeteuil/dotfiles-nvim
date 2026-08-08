@@ -301,6 +301,15 @@ vim.keymap.set('n', '<leader>nt', 'gO', { desc = 'show [T]OC', remap = true, sil
 -- keymap: show obsidian links
 vim.keymap.set('n', '<leader>nl', '<cmd>Obsidian links<CR>', { desc = 'show [l]inks (obsidian)', silent = true })
 
+-- keymaps: j/k navigate wrapped display lines unless given a count
+vim.keymap.set({ 'n', 'x' }, 'j', function()
+  return vim.v.count == 0 and 'gj' or 'j'
+end, { buffer = true, expr = true, silent = true })
+
+vim.keymap.set({ 'n', 'x' }, 'k', function()
+  return vim.v.count == 0 and 'gk' or 'k'
+end, { buffer = true, expr = true, silent = true })
+
 -- which-key notes group
 require('which-key').add {
   {

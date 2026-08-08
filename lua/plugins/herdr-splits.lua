@@ -1,12 +1,13 @@
 return {
   'lmilojevicc/herdr-splits.nvim',
+  version = '*', -- use latest release, remove to use latest commit
   -- For local development, swap the repo line for `dir = '/path/to/herdr-splits'`
   -- (see "Local development" below).
   cond = vim.env.HERDR_ENV == '1',
   event = 'VeryLazy',
   -- Optional: auto-sync the Herdr-side scripts when lazy updates this plugin.
   -- Requires `auto_sync_herdr = true` in setup() below to take effect.
-  build = 'lua require("herdr-splits").sync_herdr()',
+  build = ':lua require("herdr-splits").sync_herdr()',
   config = function()
     require('herdr-splits').setup {
       -- Defaults shown. All fields optional.
