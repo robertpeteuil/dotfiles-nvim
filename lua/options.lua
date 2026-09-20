@@ -60,7 +60,8 @@ vim.o.confirm = true
 --   new/edited files must be opened and trusted with `:trust`
 vim.o.exrc = true
 
--- set indent = 2 spaces
+-- set indent = 2 spaces - guess-indent.nvim may override
+-- vim.g.markdown_recommended_style = 0 -- disable default markdown ftplugin indendation
 vim.o.tabstop = 2 -- A TAB character looks like 2 spaces
 vim.o.expandtab = true -- Pressing the TAB key will insert spaces instead of a TAB character
 vim.o.softtabstop = 2 -- Number of spaces inserted instead of a TAB character
@@ -68,6 +69,21 @@ vim.o.shiftwidth = 2 -- Number of spaces inserted when indenting
 
 -- hide ~ at end of buffer
 vim.opt.fillchars:append { eob = ' ' }
+
+-- set spellfile location
+vim.opt.spellfile = vim.fn.stdpath('config') .. '/spell/en.utf-8.add'
+
+-- Prevent Git repository discovery above the notes directory
+local notes_ceiling = vim.uv.fs_realpath(vim.fn.expand '~/Versioned/notes/current')
+  or vim.fn.expand '~/Versioned/notes/current'
+
+local existing_ceilings = vim.env.GIT_CEILING_DIRECTORIES
+
+if existing_ceilings and existing_ceilings ~= '' then
+  vim.env.GIT_CEILING_DIRECTORIES = notes_ceiling .. ':' .. existing_ceilings
+else
+  vim.env.GIT_CEILING_DIRECTORIES = notes_ceiling
+end
 
 -- auto-session options
 --   20260606 - removed localoptions, winsize to eliminate issues related to pi terminal pane

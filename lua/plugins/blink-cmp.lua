@@ -165,7 +165,15 @@ return {
 
       sources = {
         default = { 'lsp', 'path', 'snippets', 'buffer', 'supermaven', 'lazydev' },
+        per_filetype = {
+          ['taskmgr-create'] = { 'taskmgr' },
+        },
         providers = {
+          taskmgr = {
+            name = 'Taskmgr',
+            module = 'taskmgr.blink',
+            min_keyword_length = 0,
+          },
           -- copilot = {
           --   name = 'copilot',
           --   module = 'blink-copilot',

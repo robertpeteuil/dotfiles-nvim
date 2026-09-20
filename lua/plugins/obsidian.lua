@@ -21,6 +21,7 @@ return {
           path = '~/Versioned/notes/current',
         },
       },
+      open_notes_in = 'vsplit',
       link = {
         style = 'wiki',
         format = 'shortest',
