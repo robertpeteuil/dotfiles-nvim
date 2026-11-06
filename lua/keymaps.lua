@@ -6,6 +6,9 @@
 
 -- ######## Misc -------------------------------------------
 
+-- write alias ctrl-s
+vim.keymap.set('n', '<C-s>', '<Cmd>write<CR>', { desc = 'Write', silent = true })
+
 -- remap ZZ to confirm quit
 vim.keymap.set('n', 'ZZ', '<Cmd>confirm qall<CR>', { desc = 'Quit all, prompting to save changes', silent = true })
 

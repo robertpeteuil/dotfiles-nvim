@@ -11,7 +11,7 @@ return {
       -- Additional create-task picker entries, merged with non-terminal task values
       -- Suggestions only; any typed value is accepted
       suggestions = {
-        project = { 'taskmgr', 'dotfiles', 'herdr', 'pi', 'nvim' },
+        project = { 'taskmgr', 'rex', 'pi', 'nvim', 'dotfiles', 'herdr' },
         type = { 'feat', 'fix', 'test', 'docs', 'chore', 'config', 'refactor' },
         scope = {},
       },
@@ -33,7 +33,7 @@ return {
             group = {
               field = 'project',
               direction = 'custom',
-              custom = { project = { 'taskmgr', 'herdr', 'pi', 'nvim', 'dotfiles' } },
+              custom = { project = { 'taskmgr', 'rex', 'pi', 'nvim', 'dotfiles', 'herdr' } },
             },
             separate_tasks = false,
           },
@@ -42,7 +42,7 @@ return {
             group = {
               field = 'project',
               direction = 'custom',
-              custom = { project = { 'taskmgr', 'herdr', 'pi', 'nvim', 'dotfiles' } },
+              custom = { project = { 'taskmgr', 'rex', 'pi', 'nvim', 'dotfiles', 'herdr' } },
             },
             sort = {
               field = 'completed_at',
@@ -54,7 +54,7 @@ return {
             group = {
               field = 'project',
               direction = 'custom',
-              custom = { project = { 'taskmgr', 'herdr', 'pi', 'nvim', 'dotfiles' } },
+              custom = { project = { 'taskmgr', 'rex', 'pi', 'nvim', 'dotfiles', 'herdr' } },
             },
             show_descriptions = false,
             separate_tasks = false,

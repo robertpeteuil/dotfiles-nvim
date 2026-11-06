@@ -4,6 +4,7 @@
 vim.filetype.add {
   extension = {
     ini = 'confini',
+    keymap = 'dts',
   },
   filename = {
     -- docker-compose

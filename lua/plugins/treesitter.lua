@@ -3,6 +3,7 @@ local languages = {
   'c',
   'cpp',
   'css',
+  'devicetree',
   'dockerfile',
   'fish',
   'go',
